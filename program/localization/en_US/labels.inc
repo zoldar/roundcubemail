@@ -348,6 +348,7 @@ $labels['lastpage']       = 'Show last page';
 
 $labels['group'] = 'Group';
 $labels['groups'] = 'Groups';
+$labels['listgroup'] = 'List group members';
 $labels['personaladrbook'] = 'Personal Addresses';
 
 $labels['searchsave'] = 'Save search';
