@@ -406,6 +406,12 @@ $rcmail_config['email_dns_check'] = false;
 // Note: useful when SMTP server stores sent mail in user mailbox
 $rcmail_config['no_save_sent_messages'] = false;
 
+// A static list of canned responses which are immutable for the user
+$rcmail_config['compose_responses_static'] = array(
+//  array('name' => 'Canned Response 1', 'text' => 'Static Response One'),
+//  array('name' => 'Canned Response 2', 'text' => 'Static Response Two'),
+);
+
 // ----------------------------------
 // PLUGINS
 // ----------------------------------
