@@ -660,6 +660,7 @@ class managesieve extends rcube_plugin
             $act_types      = get_input_value('_action_type', RCUBE_INPUT_POST, true);
             $mailboxes      = get_input_value('_action_mailbox', RCUBE_INPUT_POST, true);
             $act_targets    = get_input_value('_action_target', RCUBE_INPUT_POST, true);
+            $domain_targets = get_input_value('_action_target_domain', RCUBE_INPUT_POST);
             $area_targets   = get_input_value('_action_target_area', RCUBE_INPUT_POST, true);
             $reasons        = get_input_value('_action_reason', RCUBE_INPUT_POST, true);
             $addresses      = get_input_value('_action_addresses', RCUBE_INPUT_POST, true);
@@ -828,8 +829,7 @@ class managesieve extends rcube_plugin
             $i = 0;
             // actions
             foreach($act_types as $idx => $type) {
-                $type   = $this->strip_value($type);
-                $target = $this->strip_value($act_targets[$idx]);
+                $type = $this->strip_value($type);
 
                 switch ($type) {
 
@@ -854,12 +854,25 @@ class managesieve extends rcube_plugin
 
                 case 'redirect':
                 case 'redirect_copy':
+                    $target = $this->strip_value($act_targets[$idx]);
+                    $domain = $this->strip_value($domain_targets[$idx]);
+
+                    // force one of the configured domains
+                    $domains = (array) $this->rc->config->get('managesieve_domains');
+                    if (!empty($domains) && !empty($target)) {
+                        if (!$domain || !in_array($domain, $domains)) {
+                            $domain = $domains[0];
+                        }
+
+                        $target .= '@' . $domain;
+                    }
+
                     $this->form['actions'][$i]['target'] = $target;
 
-                    if ($this->form['actions'][$i]['target'] == '')
+                    if ($target == '')
                         $this->errors['actions'][$i]['target'] = $this->gettext('cannotbeempty');
-                    else if (!check_email($this->form['actions'][$i]['target']))
-                        $this->errors['actions'][$i]['target'] = $this->gettext('noemailwarning');
+                    else if (!rcube_utils::check_email($target))
+                        $this->errors['actions'][$i]['target'] = $this->plugin->gettext(!empty($domains) ? 'forbiddenchars' : 'noemailwarning');
 
                     if ($type == 'redirect_copy') {
                         $type = 'redirect';
@@ -1560,11 +1573,34 @@ class managesieve extends rcube_plugin
 
         // actions target inputs
         $out .= '<td class="rowtargets">';
-        // shared targets
-        $out .= '<input type="text" name="_action_target['.$id.']" id="action_target' .$id. '" '
-            .'value="' .($action['type']=='redirect' ? Q($action['target'], 'strict', false) : ''). '" size="35" '
-            .'style="display:' .($action['type']=='redirect' ? 'inline' : 'none') .'" '
-            . $this->error_class($id, 'action', 'target', 'action_target') .' />';
+
+        // force domain selection in redirect email input
+        $domains = (array) $this->rc->config->get('managesieve_domains');
+        if (!empty($domains)) {
+            sort($domains);
+
+            $domain_select = new html_select(array('name' => "_action_target_domain[$id]", 'id' => 'action_target_domain'.$id));
+            $domain_select->add(array_combine($domains, $domains));
+
+            $parts = explode('@', $action['target']);
+
+            if (!empty($parts)) {
+                $action['domain'] = array_pop($parts);
+                $action['target'] = implode('@', $parts);
+            }
+        }
+
+        // redirect target
+        $out .= '<span id="redirect_target' . $id . '" style="white-space:nowrap;'
+            . ' display:' . ($action['type'] == 'redirect' ? 'inline' : 'none') . '">'
+            . '<input type="text" name="_action_target['.$id.']" id="action_target' .$id. '"'
+            . ' value="' .($action['type'] == 'redirect' ? Q($action['target'], 'strict', false) : '') . '"'
+            . (!empty($domains) ? ' size="20"' : ' size="35"')
+            . $this->error_class($id, 'action', 'target', 'action_target') .' />'
+            . (!empty($domains) ? ' @ ' . $domain_select->show($action['domain']) : '')
+            . '</span>';
+
+        // (e)reject target
         $out .= '<textarea name="_action_target_area['.$id.']" id="action_target_area' .$id. '" '
             .'rows="3" cols="35" '. $this->error_class($id, 'action', 'targetarea', 'action_target_area')
             .'style="display:' .(in_array($action['type'], array('reject', 'ereject')) ? 'inline' : 'none') .'">'
