@@ -163,16 +163,8 @@ class rcube_user
         if (!$this->ID)
             return false;
 
-        $plugin = $this->rc->plugins->exec_hook('preferences_update', array(
-            'userid' => $this->ID, 'prefs' => $a_user_prefs, 'old' => (array)$this->get_prefs()));
-
-        if (!empty($plugin['abort'])) {
-            return;
-        }
-
-        $a_user_prefs = $plugin['prefs'];
-        $old_prefs    = $plugin['old'];
-        $config       = $this->rc->config;
+        $config    = $this->rc->config;
+        $old_prefs = (array)$this->get_prefs();
 
         // merge (partial) prefs array with existing settings
         $save_prefs = $a_user_prefs + $old_prefs;

@@ -81,19 +81,10 @@
 }
 
 #identity-details table td.title,
-#response-details table td.title,
 #folder-details table td.title
 {
   font-weight: bold;
   text-align: right;
-}
-
-#response-details table td.title
-{
-  text-align: left;
-  vertical-align: top;
-  width: 140px;
-  padding-top: 5px;
 }
 
 #bottomboxes
@@ -154,12 +145,6 @@ body.iframe,
   white-space: nowrap;
   text-align: right;
   float: right;
-}
-
-#formfooter .footerindent
-{
-  padding: 10px 0;
-  margin-left: 155px;
 }
 
 #quota
