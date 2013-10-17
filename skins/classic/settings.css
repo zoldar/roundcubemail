@@ -34,11 +34,6 @@
   height: 18px;
 }
 
-#identities-table tbody tr.readonly td
-{
-  font-style: italic;
-}
-
 #subscription-table tr.virtual td
 {
   color: #666;

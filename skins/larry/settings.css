@@ -194,10 +194,6 @@
 	text-overflow: ellipsis;
 }
 
-#identities-table tbody tr.readonly td {
-	font-style: italic;
-}
-
 #folder-details,
 #identity-details {
 	position: absolute;
