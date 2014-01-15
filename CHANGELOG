@@ -1,6 +1,9 @@
 CHANGELOG Roundcube Webmail
 ===========================
 
+- Integrate patch with more configuarion possibilities to LDAP (#1488753)
+- New feature "Canned Responses" to save and recall boilerplate text snippets
+
 RELEASE 0.9.5
 -------------
 - Fix failing vCard import when email address field contains spaces (#1489386)
