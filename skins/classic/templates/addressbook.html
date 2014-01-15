@@ -54,8 +54,7 @@
 <div id="directorylistbox">
 <div id="directorylist-title" class="boxtitle"><roundcube:label name="groups" /></div>
 <div id="directorylist-content" class="boxlistcontent">
-  <roundcube:object name="directorylist" id="directorylist" />
-  <roundcube:object name="groupslist" id="contactgroupslist" />
+  <roundcube:object name="directorylist" id="directorylist" class="treelist" />
 </div>
 <div id="directorylist-footer" class="boxfooter">
   <roundcube:button command="group-create" type="link" title="newcontactgroup" class="buttonPas addgroup" classAct="button addgroup" content=" " />
@@ -66,7 +65,7 @@
 <div id="addressscreen">
 
 <div id="addresslist">
-<div class="boxtitle"><roundcube:label name="contacts" /></div>
+<roundcube:object name="addresslisttitle" label="contacts" tag="div" class="boxtitle" />
 <div class="boxlistcontent">
 <roundcube:object name="addresslist" id="contacts-table" class="records-table" cellspacing="0" summary="Contacts list" noheader="true" />
 </div>
