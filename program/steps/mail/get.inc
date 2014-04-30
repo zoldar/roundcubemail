@@ -344,7 +344,7 @@ else if (strlen($pid = get_input_value('_part', RCUBE_INPUT_GET))) {
             header("Content-Length: $size");
           }
 
-          $sent = $RCMAIL->storage->get_message_part($MESSAGE->uid, $part->mime_id, $part, true);
+          $sent = $RCMAIL->storage->get_message_part($MESSAGE->uid, $part->mime_id, $part, true, null, true);
         }
       }
 
