@@ -334,7 +334,7 @@ else if (strlen($pid = get_input_value('_part', RCUBE_INPUT_GET))) {
       }
       // send part as-it-is
       else {
-        if ($part->body) {
+        if ($part->body && empty($plugin['download'])) {
           header("Content-Length: " . strlen($part->body));
           echo $part->body;
           $sent = true;
