@@ -4319,6 +4319,9 @@ function rcube_webmail()
           writable = writable || (!source.readonly && !contact.readonly);
       }
 
+      if (contact._type != 'group')
+        list.draggable = true;
+
       this.env.selection_sources = $.unique(this.env.selection_sources);
     }
 
@@ -5054,9 +5057,6 @@ function rcube_webmail()
           if (++colprop.count == colprop.limit && colprop.limit)
             $(menu).children('option[value="'+col+'"]').prop('disabled', true);
         }
-
-        if (contact._type != 'group')
-          list.draggable = true;
       }
     }
   };
