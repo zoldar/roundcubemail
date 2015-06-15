@@ -1,0 +1,11 @@
+
+#from-old-box {
+    width: 100%;
+    border: 1px solid #a1a1a1;
+    background: #00ff00;
+}
+
+#from-old-box .inner {
+    padding: 5px 10px; 
+    text-align: center;
+}

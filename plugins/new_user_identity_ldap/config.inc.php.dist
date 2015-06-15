@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * new_user_identity_ldap configuration file
+ */
+
+// LDAP database settings
+$config['new_user_identity_ldap_db'] = array(
+			  // LDAP server address
+			  'uri' => 'ldap://91.217.115.11/',
+			  // TLS negotiation
+			  'use_tls' => true,
+			  // LDAP protocol version
+			  'protocol_version' => 3,
+			  // DN for authorization
+			  'bind_dn' => 'cn=admin,dc=ima,dc=pl',
+			  // password associated with a given bind_dn
+			  'password' => 'MultiSync2014',
+			  // base DN for search
+			  'base_dn' => 'ou=accounts,ou=email,dc=ima,dc=pl',
+			  // scope to be used for search
+			  'scope' => 'sub',
+			  // name of attribute holding the configuration
+			  'attribute' => 'description',
+			  // filter expression. __USERNAME__ is swapped for the userid
+			  'filter_expr' => '(|(cn=__USERNAME__)(mail=__USERNAME__))'
+);
+
+$config['new_user_identity_ldap_attr_name'] = 'name';
+
+$config['new_user_identity_ldap_attr_email'] = 'email';
